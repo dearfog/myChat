@@ -1,14 +1,36 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span></span>
+      <span class="example-spacer">Home</span>
+      <button mat-button menuToggle class="header-buttons head-right-btn">
+        <i class="material-icons">more_vert</i>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+
+
+{{messages}}
+{{message}}
+
+
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <mat-card>
+      <mat-list>
+        <mat-list-item>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Send" [(ngModel)]="message">
+          </mat-form-field>
+          <button mat-mini-fab (click)='sendMessage();'>
+            <mat-icon aria-label="Example icon-button with a heart icon">send</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </mat-card>
+  </ion-toolbar>
+</ion-footer>

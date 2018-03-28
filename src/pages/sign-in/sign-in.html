@@ -1,0 +1,29 @@
+<ion-header>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-button class="header-buttons head-left-btn" (click)="goBack()">
+        <i class="material-icons">arrow_back</i>
+      </button>
+      <span></span>
+      <span class="example-spacer">Sign In</span>
+      <button mat-button class="header-buttons head-right-btn">
+        <i class="material-icons">assignment_ind</i>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="container">
+    <mat-form-field>
+      <input type="email" matInput [(ngModel)]="account.username" [ngModelOptions]="{standalone: true}" placeholder="Username">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="password" matInput [(ngModel)]="account.password" [ngModelOptions]="{standalone: true}" placeholder="Password">
+    </mat-form-field>
+  </div>
+  <div padding>
+    <button mat-raised-button (click)="doLogin()" color="primary" block>{{ 'SIGN IN' }}</button>
+  </div>
+</ion-content>

@@ -1,1 +1,27 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="content" side="right" type="overlay" color="primary">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <mat-list>
+      <!-- <h3 mat-subheader>Main</h3> -->
+      <mat-list-item menuClose  *ngFor="let p of pages"  (click)="openPage(p)">
+        <mat-icon mat-list-icon color="primary">folder</mat-icon>
+        <h4 mat-line> {{p.title}}</h4>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <!-- <h3 mat-subheader>Notes</h3> -->
+      <mat-list-item  (click)="logout()">
+        <mat-icon mat-list-icon color='warn'>cancel</mat-icon>
+        <!-- <i class="material-icons" mat-list-icon>cancel</i> -->
+        <h4 mat-line>Logout</h4>
+        <!-- <p mat-line></p> -->
+      </mat-list-item>
+    </mat-list>
+  </ion-content>
+</ion-menu>
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

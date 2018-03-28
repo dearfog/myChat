@@ -1,22 +1,80 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { User } from './../providers/models/user.model';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, Platform, ToastController, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { HomePage } from '../pages/home/home';
+
+import { Subscription } from 'rxjs/Subscription';
+import { UserService } from '../providers/services/user.service';
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = HomePage;
+  @ViewChild(Nav) nav: Nav;
+  public currentUser :User;
+  public isLogin:Boolean=false;
+  rootPage: any;
+  public subscription:Subscription;
+  pages: Array<{title: string, component: any}>;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public userService:UserService, public toastCtrl:ToastController, public menu: MenuController) {
+    this.initializeApp();
+
+    this.pages = [
+      { title: 'Home', component: HomePage }
+    ];
+    this.subscription = this.userService.getCurrentUser().subscribe(res=>{
+      console.log(res);
+      if (res) {
+        this.currentUser = res;
+        this.menu.enable(true);
+      }
+    })
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
     });
+    var data = JSON.parse(localStorage.getItem('token'));
+    if (localStorage.getItem('token') && data['token']) {
+       this.userService.verify(data.token).subscribe(res=>{
+        if (res['auth'] == false) {
+          this.rootPage ="WelcomePage";
+          this.menu.enable(false);
+        }
+        else{
+          this.rootPage = HomePage;
+          this.menu.enable(true);
+        }
+       },error=>{
+        this.menu.enable(false);
+        console.log(error);
+        this.rootPage ="WelcomePage";
+        let toast = this.toastCtrl.create({
+          message: "Your Session has Expired, Sign In again !!",
+          duration: 3000,
+          position: 'top'
+        });
+        toast.present();
+       })
+    }
+    else{
+      this.rootPage ="WelcomePage";
+    }
+  }
+  ionViewWillUnload(){
+    this.subscription.unsubscribe();
+  }
+  openPage(page) {
+    this.nav.setRoot(page.component);
+  }
+  logout(){
+    this.menu.enable(false);
+    this.nav.setRoot('WelcomePage');
+    localStorage.clear();
   }
 }
-

@@ -1,6 +1,4 @@
 // http://ionicframework.com/docs/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,3 +12,65 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+// .scroll-content {
+//   margin-top: 15% !important;
+// }
+ion-header,
+.toolbar-background {
+  background-color: initial !important; // background-color: rgba(0,0,0,0) !important;
+  &:after {
+    height: 0 !important;
+  }
+}
+
+button.text-left {
+  background: transparent;
+  color: white;
+}
+
+.toast-container {
+  background-color: 'mat-primary';
+  text-align: center;
+}
+
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+  position: relative;
+  margin-left: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  padding: 15px;
+}
+
+.container>* {
+  width: 100%;
+}
+
+button.mat-raised-button.mat-primary {
+  width: 100%;
+  height: 50px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+button.header-buttons.head-left-btn.mat-button {
+  width: 5%;
+  position: relative;
+  display: contents;
+}
+button.header-buttons.head-right-btn.mat-button {
+  position: relative;
+  display: contents;
+}
